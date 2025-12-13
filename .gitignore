@@ -1,0 +1,20 @@
+# Go
+backend/bin/
+backend/*.exe
+backend/*.test
+backend/*.out
+
+# Go modules cache
+**/vendor/
+
+# Node
+node_modules/
+
+# Env files (DO NOT PUSH SECRETS)
+.env
+
+# VS Code
+.vscode/
+
+# OS
+.DS_Store
