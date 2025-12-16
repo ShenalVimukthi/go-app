@@ -5,6 +5,7 @@ import (
 	"os"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
+	"goApp/database"
 	"net/http"
 )
 
@@ -14,6 +15,12 @@ func main(){
 	if err := godotenv.Load(); err != nil {
 		log.Println("No .env file found")
 	}
+
+	// ✅ DB connection test
+	if err := database.Connect(); err != nil {
+		log.Fatal("Database connection failed:", err)
+	}
+	log.Println("✅ Connected to Supabase")
 
 	// starting gin server
 	r:=gin.Default()
