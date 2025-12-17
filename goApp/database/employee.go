@@ -4,6 +4,7 @@ import (
 	"context"
 	"goApp/models/db"
 	"time"
+	"database/sql"
 )
 
 func CreateEmployee(emp *db.Employee) (*db.Employee, error) {
@@ -51,9 +52,13 @@ func GetEmployeesById(id int)(*db.Employee,error){
 	err:=DB.QueryRow(context.Background(),query,id).
 	Scan(&emp.Id,&emp.Name,&emp.Email,&emp.Tel,&emp.Age,&emp.Dept,&emp.CreatedAt)
 
-	// err handling
-	if err!=nil{
-		return nil,err
+
+	// err handling with another user dosen't exists error
+	if err != nil {
+			if err == sql.ErrNoRows {
+				return nil, nil // employee not found
+			}
+    	return nil, err // real DB error
 	}
 
 	return &emp,nil

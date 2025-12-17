@@ -6,12 +6,13 @@ import(
 	"goApp/mappers"
 	"goApp/database"
 	// "goApp/models/db"
-	// "errors"
-	// "fmt"
+	"fmt"
+	"errors"
 )
 
 // create custom errors 
-
+var ErrUserNotFound = errors.New("User Not Found")
+var ErrUserExists = errors.New("User Already Exists")
 
 
 // mock data
@@ -20,7 +21,7 @@ import(
 func GetEmployee(id int)(*response.EmployeeResponse,error){
 
 
-	// sending emloyee data inside the database querying section
+	// sending employee data inside the database querying section
 	ReceivedEmp,err:=database.GetEmployeesById(id)
 
 	// handling errors 
@@ -28,12 +29,16 @@ func GetEmployee(id int)(*response.EmployeeResponse,error){
 		return nil,err
 	}
 
+	// emp nil error handling
+	if ReceivedEmp==nil{
+		return nil,fmt.Errorf("GetEmployeesById failed for id %d: %w", id, ErrUserNotFound)
+	}
+
 	// feeding the data into response model using mapper
 	emp:=mappers.ToEmployeeResponse(ReceivedEmp)
 	
 
 	return emp,nil
-
 
 
 }
