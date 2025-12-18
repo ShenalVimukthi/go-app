@@ -6,9 +6,9 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func EmployeeRoutes(r *gin.Engine){
-	EmployeeGroup:=r.Group("employees/")
+func EmployeeRoutes(r *gin.Engine) {
+	EmployeeGroup := r.Group("employees/")
 	{
-		EmployeeGroup.GET("/:id",handlers.GetEmployee)
+		EmployeeGroup.GET("/:id", handlers.GetEmployee)
 	}
 }

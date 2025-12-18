@@ -7,6 +7,7 @@ import (
 	"github.com/joho/godotenv"
 	"goApp/database"
 	"net/http"
+	"goApp/routes"
 )
 
 func main(){
@@ -24,6 +25,9 @@ func main(){
 
 	// starting gin server
 	r:=gin.Default()
+
+	// connecting the routes to the system
+	routes.EmployeeRoutes(r)
 
 	// testing setup(fast-check)
 	r.GET("/ping",func (c *gin.Context){
