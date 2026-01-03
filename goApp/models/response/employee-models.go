@@ -8,5 +8,6 @@ type EmployeeResponse struct{
 	Tel string  `json:"tel"`
 	Age int 	`json:"age"`
 	Dept string `json:"dept"`
+	CreatedAt string `json:"created_at"`
 	
 }

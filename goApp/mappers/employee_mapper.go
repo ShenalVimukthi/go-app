@@ -22,11 +22,30 @@ func ToEmployeeResponse(emp *db.Employee) *response.EmployeeResponse {
 		Tel:   emp.Tel,
 		Age:   emp.Age,
 		Dept:  emp.Dept,
+		CreatedAt: emp.CreatedAt.String(),
 	}
 
 }
 
 func ToDataBaseModel(emp *request.CreateEmployee) *db.Employee {
+
+	// error handling
+	if emp == nil {
+		return nil
+	}
+
+	return &db.Employee{
+
+		Name:  emp.Name,
+		Email: emp.Email,
+		Tel:   emp.Tel,
+		Age:   emp.Age,
+		Dept:  emp.Dept,
+	}
+
+}
+
+func ToDataBaseModelForUpdate(emp *request.UpdateEmployee) *db.Employee {
 
 	// error handling
 	if emp == nil {

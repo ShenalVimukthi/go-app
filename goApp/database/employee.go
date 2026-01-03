@@ -2,9 +2,11 @@ package database
 
 import (
 	"context"
+	"database/sql"
 	"goApp/models/db"
 	"time"
-	"database/sql"
+
+	"github.com/jackc/pgx/v5/pgconn"
 )
 
 func CreateEmployee(emp *db.Employee) (*db.Employee, error) {
@@ -30,6 +32,10 @@ func CreateEmployee(emp *db.Employee) (*db.Employee, error) {
 
 	// handling the err
 	if err != nil {
+		// 🔥 CHECK FOR POSTGRES ERROR
+		if pgErr, ok := err.(*pgconn.PgError); ok {
+			return nil, pgErr
+		}
 		return nil, err
 	}
 
@@ -101,8 +107,7 @@ func DeleteEmployee(id int)(*db.Employee,error){
 	var emp db.Employee
 
 	// delete query for the employee
-	query:=`DELETE *
-			FROM employees
+	query:=`DELETE FROM employees
 			WHERE id=$1
 			RETURNING id, name, email, tel, age, dept, created_at`
 
